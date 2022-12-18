@@ -1,5 +1,6 @@
 package Spring.Project.service;
 
+import Spring.Project.dto.member.MemberFormDto;
 import Spring.Project.entity.Member;
 import Spring.Project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,10 +28,12 @@ public class MemberService implements UserDetailsService {
 
     public void validateDuplicateMember(Member member){
         Member findMember = memberRepository.findByEmail(member.getEmail());
+
         if(findMember != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

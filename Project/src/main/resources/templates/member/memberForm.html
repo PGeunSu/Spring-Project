@@ -9,7 +9,7 @@
       color: #bd2310;
     }
   </style>
-</th:block>
+</th:block>s
 
 <th:block layout:fragment="script">
   <script th:inline="javascript">
@@ -40,10 +40,6 @@
       <label th:for="password">비밀번호</label>
       <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요">
       <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
-    </div>
-    <div class="form-group">
-      <input type="password" th:field="*{isPwCheck()}" class="form-control" placeholder="비밀번호를 재입력해주세요">
-      <p th:if="${#fields.hasErrors('isPwCheck()')}" th:errors="*{isPwCheck()}" class="fieldError">Incorrect data</p>
     </div>
 
     <div class="form-group">

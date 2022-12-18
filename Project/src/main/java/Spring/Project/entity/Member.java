@@ -23,7 +23,6 @@ public class Member {
     @Column(unique = true)
     private String email;
     private String password;
-    private String passwordConfirm;
     private String address;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -34,9 +33,7 @@ public class Member {
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
         String password = passwordEncoder.encode(memberFormDto.getPassword());
-        String passwordConfirm = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
-        member.setPasswordConfirm(passwordConfirm);
         member.setRole(Role.USER);
         return member;
     }
