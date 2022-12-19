@@ -1,20 +1,25 @@
 package Spring.Project.controller;
 
 import Spring.Project.dto.article.ArticleForm;
+import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.dto.article.CommentDto;
+import Spring.Project.entity.Member;
 import Spring.Project.entity.article.Article;
 import Spring.Project.repository.ArticleRepository;
 import Spring.Project.service.ArticleService;
 import Spring.Project.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/article")
@@ -22,33 +27,47 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleController {
 
-     private ArticleRepository articleRepository;
-     private ArticleService articleService;
+     private final ArticleRepository articleRepository;
 
-     private CommentService commentService;
+     private final ArticleService articleService;
+
+     private final CommentService commentService;
 
      @GetMapping("/new")
     public String newArticleForm(Model model){
-         model.addAttribute("articleForm",new ArticleForm());
+         model.addAttribute("articleFormDto",new ArticleFormDto());
          return "article/new";
      }
 
      @PostMapping("/new")
-    public String createArticle(ArticleForm form){
+    public String createArticle(@Valid ArticleFormDto articleFormDto, BindingResult bindingResult, Model model){
 
-         Article article = Article.createArticle(form);
-         articleService.saveArticle(article);
+         if(bindingResult.hasErrors()){
+             return "article/new";
+         }
+         articleService.saveArticle(articleFormDto);
+//         try{
+//            articleService.saveArticle(articleFormDto);
+//         }catch (Exception e){
+//             model.addAttribute("errorMessage","에러 발생");
+//             return "article/new";
+//         }
 
-         return "redirect:/articles/" + article.getId();
+         return "redirect:/article/" ;
      }
 
-     @GetMapping("/{id}")
-    public String show(@PathVariable Long id, Model model){
-         Article articleEntity = articleRepository.findById(id).orElse(null);
-         List<CommentDto> commentDtos = commentService.comments(id);
-         //모델 등록
-         model.addAttribute("article", articleEntity);
-         model.addAttribute("commentDtos",commentDtos);
+     @GetMapping("/{articleId}")
+    public String show(@PathVariable("articleId") Long id, Model model){
+
+         try{
+             Article articleEntity = articleRepository.findById(id).orElse(null);
+             //List<CommentDto> commentDtos = commentService.comments(id);
+             model.addAttribute("articleForm", articleEntity);
+             //model.addAttribute("commentDtos",commentDtos);
+         }catch(Exception e){
+             model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
+             model.addAttribute("article", new ArticleFormDto());
+         }
 
          return "article/show";
      }
@@ -62,7 +81,7 @@ public class ArticleController {
          return "article/index";
      }
 
-     @GetMapping("/{id}/edit")
+     @GetMapping("/{articleId}/edit")
     public String edit(@PathVariable Long id, Model model){
          Article articleEntity = articleRepository.findById(id).orElse(null);
          model.addAttribute("article",articleEntity);
@@ -81,7 +100,7 @@ public class ArticleController {
          return "redirect:/articles/" + articleEntity.getId();
      }
 
-     @GetMapping("/{id}/delete")
+     @GetMapping("/{articleId}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes rttr){
          Article target = articleRepository.findById(id).orElse(null);
 

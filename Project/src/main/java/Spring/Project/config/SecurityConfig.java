@@ -33,7 +33,7 @@ public class SecurityConfig {
 
         http.authorizeRequests() //시큐리티 처리에 HttpServletRequest 를 이용한다는 의미
                 .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll() //permitAll() : 모든 사용자가 로그인 없이 경로 접근 가능
-                .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/item/**", "/images/**","/article/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN") //ADMIN 일 경우만 접근 가능
                 .anyRequest().authenticated()
         ;
@@ -49,5 +49,8 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
 
 }

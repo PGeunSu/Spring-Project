@@ -1,22 +1,21 @@
 package Spring.Project.service;
 
 import Spring.Project.dto.article.ArticleForm;
+import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.entity.article.Article;
 import Spring.Project.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class ArticleService {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     public List<Article> index(){
         return articleRepository.findAll();
@@ -26,12 +25,12 @@ public class ArticleService {
         return articleRepository.findById(id).orElse(null);
     }
 
-    public Article saveArticle(Article article){
+    public Long saveArticle(ArticleFormDto articleFormDto){
 
-        if(article.getId() != null){
-            return null;
-        }
-        return articleRepository.save(article);
+        Article article = articleFormDto.createArticle();
+        articleRepository.save(article);
+
+        return article.getId();
     }
 
     public Article update(Long id, ArticleForm dto){

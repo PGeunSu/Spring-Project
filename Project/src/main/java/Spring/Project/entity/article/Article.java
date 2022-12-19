@@ -3,6 +3,7 @@ package Spring.Project.entity.article;
 import Spring.Project.dto.article.ArticleForm;
 import Spring.Project.dto.member.MemberFormDto;
 import Spring.Project.entity.Member;
+import Spring.Project.entity.base.BaseEntity;
 import Spring.Project.status.Role;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +13,9 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter
 @Table(name = "article")
-public class Article {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Article extends BaseEntity {
 
 
 
@@ -30,6 +33,7 @@ public class Article {
     private String content;
 
 
+
     public void patch(Article article) {
         if(article.title != null){
             this.title = article.title;
@@ -43,7 +47,6 @@ public class Article {
         Article article = new Article();
         article.setTitle(articleForm.getTitle());
         article.setContent(articleForm.getContent());
-
         return article;
     }
 
