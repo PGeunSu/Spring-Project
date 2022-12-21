@@ -7,9 +7,9 @@ import Spring.Project.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -32,6 +32,8 @@ public class ArticleService {
 
         return article.getId();
     }
+
+
 
     public Article update(Long id, ArticleForm dto){
         Article article =  new Article();

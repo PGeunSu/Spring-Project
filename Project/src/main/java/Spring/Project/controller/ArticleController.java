@@ -45,15 +45,14 @@ public class ArticleController {
          if(bindingResult.hasErrors()){
              return "article/new";
          }
-         articleService.saveArticle(articleFormDto);
-//         try{
-//            articleService.saveArticle(articleFormDto);
-//         }catch (Exception e){
-//             model.addAttribute("errorMessage","에러 발생");
-//             return "article/new";
-//         }
+         try{
+            articleService.saveArticle(articleFormDto);
+         }catch (Exception e){
+             model.addAttribute("errorMessage","에러 발생");
+             return "article/new";
+         }
 
-         return "redirect:/article/" ;
+         return "redirect:/" ;
      }
 
      @GetMapping("/{articleId}")
@@ -61,18 +60,18 @@ public class ArticleController {
 
          try{
              Article articleEntity = articleRepository.findById(id).orElse(null);
-             //List<CommentDto> commentDtos = commentService.comments(id);
+            //List<CommentDto> commentDtos = commentService.comments(id);
              model.addAttribute("articleForm", articleEntity);
              //model.addAttribute("commentDtos",commentDtos);
          }catch(Exception e){
              model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
-             model.addAttribute("article", new ArticleFormDto());
+             model.addAttribute("articleForm", new ArticleFormDto());
          }
 
          return "article/show";
      }
 
-     @GetMapping("/")
+     @GetMapping("/index")
     public String index(Model model){
          List<Article> articleEntiyList = articleRepository.findAll();
 
@@ -82,7 +81,7 @@ public class ArticleController {
      }
 
      @GetMapping("/{articleId}/edit")
-    public String edit(@PathVariable Long id, Model model){
+    public String edit(@PathVariable("articleId")  Long id, Model model){
          Article articleEntity = articleRepository.findById(id).orElse(null);
          model.addAttribute("article",articleEntity);
 

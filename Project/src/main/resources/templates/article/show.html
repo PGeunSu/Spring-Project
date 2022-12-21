@@ -14,15 +14,15 @@
     </thead>
     <tbody>
 
-    <tr th:each="articleForm : ${article}">
-      <th th:text="${article.id}"></th>
-      <th th:text="${article.title}"></th>
-      <th th:text="${article.content}"></th>
+    <tr th:each="articleForm : ${articleForm}">
+      <th th:text="${articleForm.id}"></th>
+      <th th:text="${articleForm.title}"></th>
+      <th th:text="${articleForm.content}"></th>
     </tr>
 
     </tbody>
   </table>
-  <a href="/article/{{article.id}}/edit" class="btn btn-warning">Edit</a>
-  <a href="/article/{{article.id}}/delete" class="btn btn-danger">Delete</a>
-  <a href="/article" class="btn btn-primary">Go to Article List</a>
+  <a th:href="'/article/' + ${articleForm.id} + '/edti/'"  class="btn btn-warning">Edit</a>
+  <a th:href="'/article/' + ${articleForm.id} + '/delete/'" class="btn btn-danger">Delete</a>
+  <a th:href="'/article/index'" class="btn btn-primary">Go to Article List</a>
 </div>
