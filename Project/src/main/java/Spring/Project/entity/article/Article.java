@@ -1,6 +1,7 @@
 package Spring.Project.entity.article;
 
 import Spring.Project.dto.article.ArticleForm;
+import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.dto.member.MemberFormDto;
 import Spring.Project.entity.Member;
 import Spring.Project.entity.base.BaseEntity;
@@ -51,5 +52,8 @@ public class Article extends BaseEntity {
     }
 
 
-
+    public void updateArticle(ArticleFormDto articleFormDto) {
+        this.title = articleFormDto.getTitle();
+        this.content = articleFormDto.getContent();
+    }
 }

@@ -2,14 +2,11 @@ package Spring.Project.controller;
 
 import Spring.Project.dto.article.ArticleForm;
 import Spring.Project.dto.article.ArticleFormDto;
-import Spring.Project.dto.article.CommentDto;
-import Spring.Project.entity.Member;
 import Spring.Project.entity.article.Article;
 import Spring.Project.repository.ArticleRepository;
 import Spring.Project.service.ArticleService;
 import Spring.Project.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -36,23 +34,23 @@ public class ArticleController {
      @GetMapping("/new")
     public String newArticleForm(Model model){
          model.addAttribute("articleFormDto",new ArticleFormDto());
-         return "article/new";
+         return "article/articleForm";
      }
 
      @PostMapping("/new")
     public String createArticle(@Valid ArticleFormDto articleFormDto, BindingResult bindingResult, Model model){
 
          if(bindingResult.hasErrors()){
-             return "article/new";
+             return "article/articleForm";
          }
          try{
             articleService.saveArticle(articleFormDto);
          }catch (Exception e){
              model.addAttribute("errorMessage","에러 발생");
-             return "article/new";
+             return "article/articleForm";
          }
 
-         return "redirect:/" ;
+         return "redirect:/article/index" ;
      }
 
      @GetMapping("/{articleId}")
@@ -79,35 +77,44 @@ public class ArticleController {
 
          return "article/index";
      }
+     @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Long id, Model model){
 
-     @GetMapping("/{articleId}/edit")
-    public String edit(@PathVariable("articleId")  Long id, Model model){
-         Article articleEntity = articleRepository.findById(id).orElse(null);
-         model.addAttribute("article",articleEntity);
-
-         return "article/edit";
-     }
-
-     @PostMapping("/update")
-    public String update(ArticleForm form){
-         Article articleEntity = new Article();
-         Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
-
-         if(target != null){ //기존 데이터가 있다면, 값을 갱신
-             articleRepository.save(articleEntity);
+         try{
+             Article articleEntity = articleRepository.findById(id).orElse(null);
+             model.addAttribute("articleFormDto",articleEntity);
+         }catch (Exception e){
+             model.addAttribute("errorMessage","에러발생");
+             model.addAttribute("articleFormDto", new ArticleFormDto());
+             return "article/articleForm";
          }
-         return "redirect:/articles/" + articleEntity.getId();
+
+         return "article/articleForm";
      }
 
-     @GetMapping("/{articleId}/delete")
-    public String delete(@PathVariable Long id, RedirectAttributes rttr){
+     @PostMapping("/{id}/edit")
+    public String update(@Valid ArticleFormDto articleFormDto, BindingResult bindingResult, Model model){
+
+         if(bindingResult.hasErrors()){
+             return "article/articleForm";
+         }
+         try{
+             articleService.updateArticle(articleFormDto);
+         }catch (Exception e){
+             model.addAttribute("errorMessage","게시물 수정 중 오류가 발생했습니다.");
+             return "article/articleForm";
+         }
+         return "redirect:/";
+     }
+
+     @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id){
          Article target = articleRepository.findById(id).orElse(null);
 
          if(target != null){
              articleRepository.delete(target);
-             rttr.addFlashAttribute("msg","삭제가 완료되었습니다.");
          }
-         return "redirect:/articles";
+         return "redirect:/article/index";
      }
 
 }
