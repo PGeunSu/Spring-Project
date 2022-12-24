@@ -1,11 +1,9 @@
 package Spring.Project.controller;
 
-import Spring.Project.dto.article.ArticleForm;
 import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.entity.article.Article;
 import Spring.Project.repository.ArticleRepository;
 import Spring.Project.service.ArticleService;
-import Spring.Project.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,7 +25,6 @@ public class ArticleController {
 
      private final ArticleService articleService;
 
-     private final CommentService commentService;
 
      @GetMapping("/new")
     public String newArticleForm(Model model){

@@ -11,7 +11,6 @@ import javax.persistence.Id;
 @Getter @Setter
 public class itemDto extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String itemNm;
     private Integer price;

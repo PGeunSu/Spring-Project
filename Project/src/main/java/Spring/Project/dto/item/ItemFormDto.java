@@ -1,6 +1,7 @@
 package Spring.Project.dto.item;
 
 import Spring.Project.entity.item.Item;
+import Spring.Project.status.ItemSellStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,8 @@ public class ItemFormDto {
     private Integer stockNumber;
 
     private List<Long> itemImgIds;
+
+    private ItemSellStatus itemSellStatus;
 
     private static ModelMapper modelMapper = new ModelMapper();
 
