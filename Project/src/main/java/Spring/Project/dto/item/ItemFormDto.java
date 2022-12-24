@@ -29,6 +29,7 @@ public class ItemFormDto {
     private Integer stockNumber;
 
     private List<Long> itemImgIds;
+    private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
     private ItemSellStatus itemSellStatus;
 

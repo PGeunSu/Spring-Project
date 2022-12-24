@@ -1,9 +1,16 @@
 package Spring.Project.repository;
 
+import Spring.Project.dto.item.ItemSearchDto;
+import Spring.Project.dto.item.MainItemDto;
+import Spring.Project.dto.item.QMainItemDto;
+import Spring.Project.entity.item.Item;
+import Spring.Project.entity.item.QItem;
+import Spring.Project.entity.item.QItemImg;
 import Spring.Project.status.ItemSellStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
