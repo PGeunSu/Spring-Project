@@ -7,16 +7,16 @@
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Title</th>
-      <th scope="col">Content</th>
+      <th class="md-3" scope="col">제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">작성날짜</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="articleList : ${articleList}">
-      <th th:text="${articleList.id}"></th>
       <td><a th:text="${articleList.title}" th:href="'/article/' + ${articleList.id}"></a></td>
-      <td th:text="${articleList.content}"></td>
+      <td th:text="${articleList.createdBy}"></td>
+      <td th:text="${#temporals.format(articleList.updateTime, 'yy.MM.dd HH:mm')}"></td>
     </tr>
     </tbody>
   </table>

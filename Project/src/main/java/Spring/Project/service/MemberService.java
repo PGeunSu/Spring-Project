@@ -1,15 +1,12 @@
 package Spring.Project.service;
 
-import Spring.Project.dto.member.MemberFormDto;
 import Spring.Project.entity.Member;
-import Spring.Project.repository.MemberRepository;
+import Spring.Project.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

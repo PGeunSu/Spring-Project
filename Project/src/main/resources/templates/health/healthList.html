@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout1}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        $(document).ready(function(){
+            $("#searchBtn").on("click",function(e) {
+                e.preventDefault();
+                page(0);
+            });
+        });
+
+        function page(page){
+            var searchHealthStatus = $("#healthStatus").val();
+            var searchBy = $("#searchBy").val();
+            var searchQuery = $("#searchQuery").val();
+
+            location.href="/health/healthList/" + page
+            + "&healthStatus=" + searchHealthStatus
+            + "&searchBy=" + searchBy
+            + "&searchQuery=" + searchQuery;
+        }
+
+    </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        select{
+            margin-right:10px;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+
+    <form th:action="@{'/health/healthList/' + ${health.number}}" role="form" method="get" th:object="${health}">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>식품명</td>
+                <td>구성원</td>
+                <td>탄수화물</td>
+                <td>단백질</td>
+                <td>지방</td>
+                <td>칼로리</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="health, status: ${health.getContent()}">
+                <td>
+                    <a th:href="${health.id}" th:text="${health.foodNm}"></a>
+                </td>
+<!--                <td th:text="${health.healthStatus == T(Spring.Project.status.HealthStatus).CARBOHYDRATE} ? '탄수화물' :-->
+<!--                ${health.healthStatus == T(Spring.Project.status.HealthStatus).PROTEIN} ? '단백질' : '지방'">-->
+<!--                </td>-->
+                <td th:text="${health.healthStatus == T(Spring.Project.status.HealthStatus).CARBOHYDRATE} ? '탄수화물' : (${health.healthStatus == T(Spring.Project.status.HealthStatus).PROTEIN} ? '단백질' : '지방')"></td>
+                <td th:text="${health.carbohydrate} + 'g'"></td>
+                <td th:text="${health.protein} + 'g'"></td>
+                <td th:text="${health.fat} + 'g'"></td>
+                <td th:text="${health.calorie} + 'kcal'"></td>
+            </tr>
+            </tbody>
+        </table>
+        <!--start = (현재 페이지 번호 / 보여줄 페이지 수) +1 --> <!--end = start + (보여줄 페이지 수) +1 -->
+        <div th:with="start=${(health.number/maxPage)*maxPage + 1}, end=(${(health.totalPages == 0) ? 1 : (start + (maxPage - 1) < health.totalPages ? start + (maxPage - 1) : health.totalPages)})" >
+            <ul class="pagination justify-content-center">
+
+                <li class="page-item" th:classappend="${health.first}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${health.number - 1} + ')'" aria-label='Previous' class="page-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${health.number eq page - 1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                <!--페이지 번호 클릭 시 해당 페이지로 이동하도록 page 함수 호출-->
+                </li>
+                <!--마지막 페이지면 Next 클릭 불가-->
+                <li class="page-item" th:classappend="${health.last}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${health.number + 1} + ')'" aria-label='Next' class="page-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                    <!--현재 페이지가 첫번 째일 경우 이전 페이지로 이동한느 Previous 버튼 사용을 금지함(disabled)-->
+                </li>
+
+
+            </ul>
+        </div>
+
+        <div class="form-inline justify-content-center" th:object="${healthSearchDto}">
+            <select th:field="*{healthStatus}" class="form-control" style="width:auto;">
+                <option value="">구성원</option>
+                <option value="CARBOHYDRATE">탄수화물</option>
+                <option value="PROTEIN">단백질</option>
+                <option value="FAT">지방</option>
+            </select>
+            <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+                <option value="foodNm">상품명</option>
+            </select>
+            <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+            <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+        </div>
+    </form>
+
+</div>
+
+</html>

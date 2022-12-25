@@ -2,7 +2,7 @@ package Spring.Project.service;
 
 import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.entity.article.Article;
-import Spring.Project.repository.ArticleRepository;
+import Spring.Project.repository.article.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

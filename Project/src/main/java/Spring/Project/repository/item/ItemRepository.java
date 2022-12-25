@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.item;
 
 import Spring.Project.entity.item.Item;
 import org.springframework.data.jpa.repository.JpaRepository;

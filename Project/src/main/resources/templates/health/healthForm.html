@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout1}">
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    $(function(){
+      const errorMessage = [[${errorMessage}]];
+      if(errorMessage != null){
+        alert(errorMessage);
+      }
+    });
+
+  </script>
+</th:block>
+
+
+<th:block layout:fragment="css">
+  <style>
+    .input-group {
+      margin-bottom : 15px;
+    }
+    .fieldError {
+      color: #bd2130;
+    }
+    .h2{
+      text-align: left;
+    }
+  </style>
+</th:block>
+
+
+<div layout:fragment="content">
+  <form role="form" method="post" enctype="multipart/form-data" th:object="${healthFormDto}">
+    <div th:if="${#strings.isEmpty(healthFormDto.id)}" style="text-align: center">
+      <p class="h2">식단 등록</p>
+    </div>
+    <div th:unless="${#strings.isEmpty(healthFormDto.id)}" style="text-align: center">
+      <p class="h2">식단 수정</p>
+    </div>
+    <p style="color: #bd2130;"> %주의 사항 : 함량은 10g 기준으로 입력하되 소수점은 입력하지 마세요.%</p>
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group">
+      <select th:field="*{healthStatus}" class="custom-select">
+        <option value="CARBOHYDRATE">탄수화물</option>
+        <option value="PROTEIN">딘백질</option>
+        <option value="FAT">지방</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">식품명</span>
+      </div>
+      <input type="text" th:field="*{foodNm}" class="form-control" placeholder="식품명을 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('foodNm')}" th:errors="*{foodNm}" class="fieldError">Incorrect data</p>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">탄수화물</span>
+      </div>
+      <input type="number" th:field="*{carbohydrate}" class="form-control" placeholder="탄수화물 함량을 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('carbohydrate')}" th:errors="*{carbohydrate}" class="fieldError">Incorrect data</p>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">단백질</span>
+      </div>
+      <input type="number" th:field="*{protein}" class="form-control" placeholder="단백질 함량 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('protein')}" th:errors="*{protein}" class="fieldError">Incorrect data</p>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">지방</span>
+      </div>
+      <input type="number" th:field="*{fat}" class="form-control" placeholder="지방 함량 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('fat')}" th:errors="*{fat}" class="fieldError">Incorrect data</p>
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">총 칼로리</span>
+      </div>
+      <input type="number" th:field="*{calorie}" class="form-control" placeholder="총 칼로리를 입력해주세요">
+    </div>
+    <p th:if="${#fields.hasErrors('calorie')}" th:errors="*{calorie}" class="fieldError">Incorrect data</p>
+
+
+    <div th:if="${#strings.isEmpty(healthFormDto.id)}" style="text-align: center">
+      <button th:formactioan="@{/health/new}" type="submit" class="btn btn-primary">저장</button>
+    </div>
+    <!--상품 아이디가 없는 경우(상품을 처음 등록할 경우) 저장 로직 호출 버튼 보여줌-->
+    <div th:unless="${#strings.isEmpty(healthFormDto.id)}" style="text-align: center">
+      <button th:formaction="@{'/health/' + ${healthFormDto.id} }" type="submit" class="btn btn-primary">수정</button>
+    </div>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <!--상품 아이디가 있는 경우 수정 로직을 호출하는 버튼을 보여줌.-->
+  </form>
+</div>
+
+</html>

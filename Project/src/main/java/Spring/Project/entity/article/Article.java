@@ -24,10 +24,6 @@ public class Article extends BaseEntity {
     @Column(name = "articleId")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
-    private Member member;
-
     @Column
     private String title;
     @Column

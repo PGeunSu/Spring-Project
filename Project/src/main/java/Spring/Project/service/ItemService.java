@@ -6,8 +6,8 @@ import Spring.Project.dto.item.ItemSearchDto;
 import Spring.Project.dto.item.MainItemDto;
 import Spring.Project.entity.item.Item;
 import Spring.Project.entity.item.ItemImg;
-import Spring.Project.repository.ItemImgRepository;
-import Spring.Project.repository.ItemRepository;
+import Spring.Project.repository.item.ItemImgRepository;
+import Spring.Project.repository.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static Spring.Project.entity.item.QItemImg.itemImg;
 
 @Service
 @Transactional

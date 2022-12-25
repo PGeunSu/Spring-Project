@@ -22,9 +22,9 @@
 
     </tbody>
   </table>
-  <a th:href="'/article/' + ${articleForm.id} + '/edit'"  class="btn btn-warning">Edit</a>
-  <a th:href="'/article/' + ${articleForm.id} + '/delete'" class="btn btn-danger">Delete</a>
+
+
+ <a th:href="'/article/' + ${articleForm.id} + '/edit'"  class="btn btn-warning">Edit</a>
+<a th:href="'/article/' + ${articleForm.id} + '/delete'" class="btn btn-danger">Delete</a>
   <a th:href="'/article/index'" class="btn btn-primary">Go to Article List</a>
 </div>
-
-<div th:replace="comment/comments::comments"></div>

@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.cartOrder;
 
 import Spring.Project.dto.cart.CartDetailDto;
 import Spring.Project.entity.cart.CartItem;

@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.item;
 
 import Spring.Project.dto.item.ItemSearchDto;
 import Spring.Project.dto.item.MainItemDto;

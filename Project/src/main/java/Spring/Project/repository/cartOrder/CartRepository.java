@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.cartOrder;
 
 import Spring.Project.entity.cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;

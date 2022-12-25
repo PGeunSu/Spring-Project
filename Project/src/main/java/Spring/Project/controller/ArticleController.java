@@ -2,9 +2,10 @@ package Spring.Project.controller;
 
 import Spring.Project.dto.article.ArticleFormDto;
 import Spring.Project.entity.article.Article;
-import Spring.Project.repository.ArticleRepository;
+import Spring.Project.repository.article.ArticleRepository;
 import Spring.Project.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/article")
@@ -53,9 +55,8 @@ public class ArticleController {
 
          try{
              Article articleEntity = articleRepository.findById(id).orElse(null);
-            //List<CommentDto> commentDtos = commentService.comments(id);
              model.addAttribute("articleForm", articleEntity);
-             //model.addAttribute("commentDtos",commentDtos);
+             System.out.println(id);
          }catch(Exception e){
              model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
              model.addAttribute("articleForm", new ArticleFormDto());

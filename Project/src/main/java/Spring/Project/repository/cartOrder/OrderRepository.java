@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.cartOrder;
 
 import Spring.Project.entity.order.Order;
 import org.springframework.data.domain.Pageable;

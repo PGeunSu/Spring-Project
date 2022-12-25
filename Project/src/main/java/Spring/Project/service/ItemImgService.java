@@ -1,7 +1,7 @@
 package Spring.Project.service;
 
 import Spring.Project.entity.item.ItemImg;
-import Spring.Project.repository.ItemImgRepository;
+import Spring.Project.repository.item.ItemImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package Spring.Project.repository;
+package Spring.Project.repository.member;
 
 
 import Spring.Project.entity.Member;
