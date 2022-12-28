@@ -27,7 +27,7 @@ Spring Boot 웹사이트 (개인 프로젝트)
 
 <br>
 
-## 🔌 Dependcies
+## 🔌 Dependencies
 * Spring Boot DevTools
 * Lombok
 * Spring Data JPA
