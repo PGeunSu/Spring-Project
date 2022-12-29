@@ -8,7 +8,7 @@ Spring Boot 웹사이트 (개인 프로젝트)
 
 <br>
 
-> 📺 🎥 [기능 구현 영상]()
+> 📺 🎥 [기능 구현 영상](https://drive.google.com/file/d/1vrDuOA7JlgbuLWsEo7FczTv3B0jNf8ZF/view?usp=share_link)
 
 <br>
 
